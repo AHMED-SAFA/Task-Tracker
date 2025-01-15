@@ -202,7 +202,105 @@ struct ListView: View {
         }
     }
 
-   
+    func toggleColorScheme() {
+        if colorScheme == .dark {
+            UIApplication.shared.windows.first?.rootViewController?.overrideUserInterfaceStyle = .light
+        } else {
+            UIApplication.shared.windows.first?.rootViewController?.overrideUserInterfaceStyle = .dark
+        }
+    }
+}
+
+struct FontSelectionSheet: View {
+    @Binding var selectedFont: String
+    @Environment(\.dismiss) var dismiss
+
+    private let fonts: [String] = [
+        "Helvetica", "Courier", "Times New Roman", "Verdana", "Georgia",
+        "Arial", "Chalkboard SE", "Futura", "Avenir", "Gill Sans"
+    ]
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack {
+                    ForEach(fonts, id: \.self) { font in
+                        Button(action: {
+                            selectedFont = font
+                            dismiss()
+                        }) {
+                            Text(font)
+                                .font(.custom(font, size: 20))
+                                .padding()
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Pick a Font")
+        }
+    }
+}
+
+struct SizeSelectionSheet: View {
+    @Binding var fontSize: Int
+    @Environment(\.dismiss) var dismiss
+
+    private let sizes: [Int] = [5, 12, 18, 20, 25, 34, 40, 48, 56, 64]
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack {
+                    ForEach(sizes, id: \.self) { size in
+                        Button(action: {
+                            fontSize = size
+                            dismiss()
+                        }) {
+                            Text("Size: \(size)")
+                                .font(.system(size: CGFloat(size)))
+                                .padding()
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Pick a Font Size")
+        }
+    }
+}
+
+struct ColorSelectionSheet: View {
+    @Binding var fontColor: Color
+    @Environment(\.dismiss) var dismiss
+
+    private let colors: [Color] = [
+        .black, .red, .blue, .green, .orange, .purple, .gray, .pink, .yellow, .brown
+    ]
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack {
+                    ForEach(colors, id: \.self) { color in
+                        Button(action: {
+                            fontColor = color
+                            dismiss()
+                        }) {
+                            HStack {
+                                Circle()
+                                    .fill(color)
+                                    .frame(width: 40, height: 40)
+                                    .padding(25)
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Pick a Font Color")
+        }
+    }
+}
+
+
 
 
 
