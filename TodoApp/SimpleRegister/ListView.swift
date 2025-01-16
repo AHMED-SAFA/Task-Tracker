@@ -174,6 +174,22 @@ struct ListView: View {
                     }
                 }
             )
+            .navigationBarTitle("Tasks List", displayMode: .inline)
+            .overlay(
+                NavigationLink(destination: ProfileAct()) {
+                    Image(systemName: "person.circle.fill")
+                        .font(.system(size: 40))
+                        .foregroundColor(.blue)
+                        .padding()
+                        .background(Circle().fill(Color.white))
+                        .shadow(radius: 5)
+                        .padding(.bottom, 30)
+                        .padding(.trailing, 20)
+                },
+                alignment: .bottomTrailing
+            )
+
+            
             .sheet(isPresented: $showFontSheet) {
                 // Font Selection Sheet
                 FontSelectionSheet(selectedFont: $selectedFont)
@@ -299,9 +315,6 @@ struct ColorSelectionSheet: View {
         }
     }
 }
-
-
-
 
 
 
